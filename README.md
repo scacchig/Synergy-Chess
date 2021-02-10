@@ -28,15 +28,19 @@ this situation of equilibrium can occur 15 times and is managed with the decisio
 
 # Using Synergy-Chess
 
-1 - after creating the following files, place them in the same directory : 
+1 - Install Python on your PC (https://www.python.org/downloads), 
+in this way the read of file goratschinChess.py and goratschinLauncher.py is safe, 
+and the installing of the goratschinLauncer.bat file in the Arena GUI or Cute-Chess, too.
+
+2 - after creating the following files, place them in the same directory : 
 goratschinLauncer.bat 
 goratschinChess.py 
 goratschinLauncher.py 
 and in the same directory also place the 5 files.exe of the chess engines you have chosen 
 
-2 - install the goratschinLauncer.bat file as a new engine in the GUI of Arena or Cute Chess 
+3 - install the goratschinLauncer.bat file as a new engine in the GUI of Arena or Cute Chess 
 
-3 - if you want to customize the parameters of each single engine, you can use "Eman Chimera" 
+4 - if you want to customize the parameters of each single engine, you can use "Eman Chimera" 
 (https://eman.zohosites.com/eman-chimera.html) which allows you to view the engine configuration, 
 customize it and finally create the file.exe of the chess engine that will be placed together with the files.py and .bat 
 Note : 
