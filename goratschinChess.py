@@ -360,9 +360,12 @@ class GoratschinChess:
                 emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
                 decider = counselor4
             else:
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
+                if self._moves[boss] is not None and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
+                    emit_and_log("info string listening to boss: Boss Decide")
+                    decider = boss
+                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4]:
+                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
+                    decider = boss
                 if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss]:
                     emit_and_log("info string listening to counselor: Counselor Agree")
                     decider = counselor
@@ -375,33 +378,9 @@ class GoratschinChess:
                 if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor4] == self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor] != self._moves[boss]:
                     emit_and_log("info string listening to counselor2: Counselor Agree")
                     decider = counselor2
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor4]:
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4]:
                     emit_and_log("info string listening to counselor: Counselor Agree")
                     decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: Counselor Agree")
-                    decider = counselor2
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: Counselor Agree")
-                    decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2]:
                     emit_and_log("info string listening to boss: Boss & Counselor Agree")
                     decider = boss
@@ -438,42 +417,165 @@ class GoratschinChess:
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
                     emit_and_log("info string listening to boss: Boss & Counselor Agree")
                     decider = boss
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor: Counselor Agree")
+                    decider = counselor
+                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor2: Counselor Agree")
+                    decider = counselor2
+                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
+                    emit_and_log("info string listening to counselor2: Counselor Agree")
+                    decider = counselor2
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: C & B Pair Decide C")
-                    decider = counselor
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C & C2 C3 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: B C & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to counselor: C & B Pair Decide C")
-                    decider = counselor
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C & C2 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: B C & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor2]:
-                    emit_and_log("info string listening to counselor: C & B Pair Decide C")
-                    decider = counselor
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C & C3 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: B C & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        decider = counselor3
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: C2 & B Pair Decide C2")
-                    decider = counselor2
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C2 & C C3 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C2 & C C3 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to counselor2: C2 & B Pair Decide C2")
-                    decider = counselor2
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C2 & C C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C2 & C C4 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor]:
-                    emit_and_log("info string listening to counselor2: C2 & B Pair Decide C2")
-                    decider = counselor2
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C2 & C3 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: B C2 & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        decider = counselor3
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor3: C3 & B Pair Decide C3")
-                    decider = counselor3
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C3 & C C2 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C3 & C C2 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor2]:
-                    emit_and_log("info string listening to counselor3: C3 & B Pair Decide C3")
-                    decider = counselor3
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C3 & C C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C3 & C C4 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor]:
-                    emit_and_log("info string listening to counselor3: C3 & B Pair Decide C3")
-                    decider = counselor3
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C3 & C2 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: B C3 & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor3]:
-                    emit_and_log("info string listening to counselor4: C4 & B Pair Decide C4")
-                    decider = counselor4
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C4 & C C2 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C4 & C C2 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor2]:
-                    emit_and_log("info string listening to counselor4: C4 & B Pair Decide C4")
-                    decider = counselor4
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C4 & C C3 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: B C4 & C C3 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor]:
-                    emit_and_log("info string listening to counselor4: C4 & B Pair Decide C4")
-                    decider = counselor4
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B C4 & C2 C3 Pair - Decide B by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: B C4 & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor4] != self._moves[boss]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C C2 & C3 C4 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C C2 & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        decider = counselor3
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor4] != self._moves[boss]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C C3 & C2 C4 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C C3 & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
+                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor3] != self._moves[boss]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C C4 & C2 C3 Pair - Decide C by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C C4 & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
+                        decider = counselor2
                 if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor]:
                     emit_and_log("info string listening to boss: B & C agree")
                     decider = boss
@@ -504,9 +606,6 @@ class GoratschinChess:
                 if self._moves[counselor3] is not None and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor2]:
                     emit_and_log("info string listening to counselor3: C3 & C4 agree")
                     decider = counselor3
-                if self._moves[boss] is not None and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss Decide")
-                    decider = boss
                            
             self.listenedTo[decider] += 1
             bestMove = self._moves[decider]
