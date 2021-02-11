@@ -17,14 +17,14 @@ finally, in last combination where all the chess engines emit different moves, t
 
 # Majority Decision Making System
 the majority decision-making system is composed of 52 different combinations with these criteria : 
-1 - five engines agree, make the move of 5 
-2 - four engines agree, make the move of 4 
-3 - three engines agree and 2 are different from each other and different from 3, make the move of 3 
-4 - three engines agree and two are different from 3 but agree with each other, make the move of 3 
-5 - one pair of chess engines agrees and another pair agrees, but with a different move : 
+- 1 - five engines agree, make the move of 5 
+- 2 - four engines agree, make the move of 4 
+- 3 - three engines agree and 2 are different from each other and different from 3, make the move of 3 
+- 4 - three engines agree and two are different from 3 but agree with each other, make the move of 3 
+- 5 - one pair of chess engines agrees and another pair agrees, but with a different move : 
 this situation of equilibrium can occur 15 times and is managed with the decision-making system with scores  
-6 - a pair of engines agrees and 3 engines are different from each other and from the torque, pair decide
-7 - all engines give a different move, in which case it decides the chess engine called boss 
+- 6 - a pair of engines agrees and 3 engines are different from each other and from the torque, pair decide
+- 7 - all engines give a different move, in which case it decides the chess engine called boss 
 
 # Using Synergy-Chess
 
