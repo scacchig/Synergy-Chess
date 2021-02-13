@@ -712,6 +712,20 @@ class GoratschinChess:
                 + " - counselor: bm " + str(self._moves[counselor]) + " sc " + str(self._scores[counselor])
                 + " diff: {:2.2f}".format(diff))
 
+    def _printResult(self, boss, counselor2, diff):
+          emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
+                + " - counselor2: bm " + str(self._moves[counselor2]) + " sc " + str(self._scores[counselor2])
+                + " diff: {:2.2f}".format(diff))
+
+    def _printResult(self, boss, counselor3, diff):
+          emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
+                + " - counselor3: bm " + str(self._moves[counselor3]) + " sc " + str(self._scores[counselor3])
+                + " diff: {:2.2f}".format(diff))
+
+    def _printResult(self, boss, counselor4, diff):
+          emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
+                + " - counselor4: bm " + str(self._moves[counselor4]) + " sc " + str(self._scores[counselor4])
+                + " diff: {:2.2f}".format(diff))
 
     # prints stats on how often was listened to boss and how often to counselor
     def _printStats(self):
@@ -721,7 +735,16 @@ class GoratschinChess:
         winCounselor, drawCounselor, lossCounselor = get_win_draw_loss_percentages(self._scores_white[1])
         emit_and_log("info string Counselor best move: " + str(self._moves[1]) + " score: " + str(self._scores[1])
                       + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor, drawCounselor, lossCounselor))
-        emit_and_log("info string listen stats [Boss, Counselor] " + str(self.listenedTo))
+        winCounselor2, drawCounselor2, lossCounselor2 = get_win_draw_loss_percentages(self._scores_white[2])
+        emit_and_log("info string Counselor2 best move: " + str(self._moves[2]) + " score: " + str(self._scores[2])
+                      + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor2, drawCounselor2, lossCounselor2))
+        winCounselor3, drawCounselor3, lossCounselor3 = get_win_draw_loss_percentages(self._scores_white[3])
+        emit_and_log("info string Counselor3 best move: " + str(self._moves[3]) + " score: " + str(self._scores[3])
+                      + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor3, drawCounselor3, lossCounselor3))
+        winCounselor4, drawCounselor4, lossCounselor4 = get_win_draw_loss_percentages(self._scores_white[4])
+        emit_and_log("info string Counselor4 best move: " + str(self._moves[4]) + " score: " + str(self._scores[4])
+                      + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor4, drawCounselor4, lossCounselor4))
+        emit_and_log("info string listen stats [Boss, Counselor, Counselor2, Counselor3, Counselor4] " + str(self.listenedTo))
         totalSum = self.listenedTo[0] + self.listenedTo[1] 
         bossSum = self.listenedTo[0] 
         bossPercent = (float(bossSum) / float(totalSum)) * 100.0
