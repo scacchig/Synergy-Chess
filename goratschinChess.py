@@ -30,26 +30,26 @@ class GoratschinChess:
     _canceled = False
 
     # the pythonChess engine objects, loaded from the filePath and fileName
-    _engines = [None, None, None, None, None]
+    _engines = [None, None, None, None, None, None, None]
 
     # The current move decided by the engine. None when it doesn't know yet
-    _moves = [None, None, None, None, None]
+    _moves = [None, None, None, None, None, None, None]
         
     # The current infos
-    _info = [None, None, None, None, None]
+    _info = [None, None, None, None, None, None, None]
 
     _pos = "position startpos"
 
     # The current score of move decided by the engine. None when it doesn't know yet
-    _scores = [None, None, None, None, None]
-    _scores_white = [None, None, None, None, None] # from white's view
+    _scores = [None, None, None, None, None, None, None]
+    _scores_white = [None, None, None, None, None, None, None] # from white's view
 
     # current board status, probably received from UCI position commands
     board = chess.Board()
 
     # Statistics for how often we listened to each engine, 
     # and how often the engines agreed on a move
-    listenedTo = [0, 0, 0, 0, 0]
+    listenedTo = [0, 0, 0, 0, 0, 0, 0]
     agreed = 0
 
     # Initialized in the init function. These are the folder path and a list of filenames in that folder
@@ -104,6 +104,10 @@ class GoratschinChess:
                     emit_and_log("info string started engine 3 as counselor3      (" + engineName + ")")
                 if i == 4:
                     emit_and_log("info string started engine 4 as counselor4      (" + engineName + ")")
+                if i == 5:
+                    emit_and_log("info string started engine 5 as counselor5      (" + engineName + ")")
+                if i == 6:
+                    emit_and_log("info string started engine 6 as counselor6      (" + engineName + ")")
                 
             except Exception as e:
                 sys.stderr.write(str(e))
@@ -148,8 +152,8 @@ class GoratschinChess:
 
             elif userCommand.startswith("go"):
                 self._canceled = False
-                self._moves = [None, None, None, None, None]
-                self._scores = [None, None, None, None, None]
+                self._moves = [None, None, None, None, None, None, None]
+                self._scores = [None, None, None, None, None, None, None]
 
                 parts = userCommand.split(" ")
                 cmds = {}
@@ -235,7 +239,7 @@ class GoratschinChess:
                 emit_and_log("setting multi pv mode to " + mpv_mode)
 
 
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 
     def send_command_to_engines(self, cmd):
@@ -289,6 +293,8 @@ class GoratschinChess:
         counselor2 = 2
         counselor3 = 3
         counselor4 = 4
+        counselor5 = 5
+        counselor6 = 6
         decider = boss
                
         info = self._info[index]
@@ -339,273 +345,3958 @@ class GoratschinChess:
 
         # if counselor is much better than boss, do counselor's move
         if None not in self._moves:
-            diff = self._scores[counselor] - self._scores[boss]
+            diff = self._scores[boss] - self._scores[counselor]
             self._printResult(boss, counselor, diff)
-            diff = self._scores[counselor2] - self._scores[boss]
+            diff = self._scores[counselor] - self._scores[boss]
+            self._printResult(counselor, boss, diff)
+            diff = self._scores[boss] - self._scores[counselor2]
             self._printResult(boss, counselor2, diff)
-            diff = self._scores[counselor3] - self._scores[boss]
+            diff = self._scores[counselor2] - self._scores[boss]
+            self._printResult(counselor2, boss, diff)
+            diff = self._scores[boss] - self._scores[counselor3]
             self._printResult(boss, counselor3, diff)
-            diff = self._scores[counselor4] - self._scores[boss]
+            diff = self._scores[counselor3] - self._scores[boss]
+            self._printResult(counselor3, boss, diff)
+            diff = self._scores[boss] - self._scores[counselor4]
             self._printResult(boss, counselor4, diff)
-            if self._scores[counselor] - self._scores[boss] > self._scores[counselor2] - self._scores[boss] and self._scores[counselor3] - self._scores[boss] < self._scores[counselor] - self._scores[boss] and self._scores[counselor4] - self._scores[boss] < self._scores[counselor] - self._scores[boss] and self._scores[counselor] - self._scores[boss] >10:
+            diff = self._scores[counselor4] - self._scores[boss]
+            self._printResult(counselor4, boss, diff)
+            diff = self._scores[boss] - self._scores[counselor5]
+            self._printResult(boss, counselor5, diff)
+            diff = self._scores[counselor5] - self._scores[boss]
+            self._printResult(counselor5, boss, diff)
+            diff = self._scores[boss] - self._scores[counselor6]
+            self._printResult(boss, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[boss]
+            self._printResult(counselor6, boss, diff)
+            diff = self._scores[counselor] - self._scores[counselor2]
+            self._printResult(counselor, counselor2, diff)
+            diff = self._scores[counselor2] - self._scores[counselor]
+            self._printResult(counselor2, counselor, diff)
+            diff = self._scores[counselor] - self._scores[counselor3]
+            self._printResult(counselor, counselor3, diff)
+            diff = self._scores[counselor3] - self._scores[counselor]
+            self._printResult(counselor3, counselor, diff)
+            diff = self._scores[counselor] - self._scores[counselor4]
+            self._printResult(counselor, counselor4, diff)
+            diff = self._scores[counselor4] - self._scores[counselor]
+            self._printResult(counselor4, counselor, diff)
+            diff = self._scores[counselor] - self._scores[counselor5]
+            self._printResult(counselor, counselor5, diff)
+            diff = self._scores[counselor5] - self._scores[counselor]
+            self._printResult(counselor5, counselor, diff)
+            diff = self._scores[counselor] - self._scores[counselor6]
+            self._printResult(counselor, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[counselor]
+            self._printResult(counselor6, counselor, diff)
+            diff = self._scores[counselor2] - self._scores[counselor3]
+            self._printResult(counselor2, counselor3, diff)
+            diff = self._scores[counselor3] - self._scores[counselor2]
+            self._printResult(counselor3, counselor2, diff)
+            diff = self._scores[counselor2] - self._scores[counselor4]
+            self._printResult(counselor2, counselor4, diff)
+            diff = self._scores[counselor4] - self._scores[counselor2]
+            self._printResult(counselor4, counselor2, diff)
+            diff = self._scores[counselor2] - self._scores[counselor5]
+            self._printResult(counselor2, counselor5, diff)
+            diff = self._scores[counselor5] - self._scores[counselor2]
+            self._printResult(counselor5, counselor2, diff)
+            diff = self._scores[counselor2] - self._scores[counselor6]
+            self._printResult(counselor2, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[counselor2]
+            self._printResult(counselor6, counselor2, diff)
+            diff = self._scores[counselor3] - self._scores[counselor4]
+            self._printResult(counselor3, counselor4, diff)
+            diff = self._scores[counselor4] - self._scores[counselor3]
+            self._printResult(counselor4, counselor3, diff)
+            diff = self._scores[counselor3] - self._scores[counselor5]
+            self._printResult(counselor3, counselor5, diff)
+            diff = self._scores[counselor5] - self._scores[counselor3]
+            self._printResult(counselor5, counselor3, diff)
+            diff = self._scores[counselor3] - self._scores[counselor6]
+            self._printResult(counselor3, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[counselor3]
+            self._printResult(counselor6, counselor3, diff)
+            diff = self._scores[counselor4] - self._scores[counselor5]
+            self._printResult(counselor4, counselor5, diff)
+            diff = self._scores[counselor5] - self._scores[counselor4]
+            self._printResult(counselor5, counselor4, diff)
+            diff = self._scores[counselor4] - self._scores[counselor6]
+            self._printResult(counselor4, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[counselor4]
+            self._printResult(counselor6, counselor4, diff)
+            diff = self._scores[counselor5] - self._scores[counselor6]
+            self._printResult(counselor5, counselor6, diff)
+            diff = self._scores[counselor6] - self._scores[counselor5]
+            self._printResult(counselor6, counselor5, diff)
+            if self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
                 emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
                 decider = counselor
-            if self._scores[counselor2] - self._scores[boss] > self._scores[counselor] - self._scores[boss] and self._scores[counselor3] - self._scores[boss] < self._scores[counselor2] - self._scores[boss] and self._scores[counselor4] - self._scores[boss] < self._scores[counselor2] - self._scores[boss] and self._scores[counselor2] - self._scores[boss] > 10:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
                 emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
                 decider = counselor2
-            if self._scores[counselor3] - self._scores[boss] > self._scores[counselor] - self._scores[boss] and self._scores[counselor2] - self._scores[boss] < self._scores[counselor3] - self._scores[boss] and self._scores[counselor4] - self._scores[boss] < self._scores[counselor3] - self._scores[boss] and self._scores[counselor3] - self._scores[boss] > 10:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
                 emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
                 decider = counselor3
-            if self._scores[counselor4] - self._scores[boss] > self._scores[counselor] - self._scores[boss] and self._scores[counselor2] - self._scores[boss] < self._scores[counselor4] - self._scores[boss] and self._scores[counselor3] - self._scores[boss] < self._scores[counselor4] - self._scores[boss] and self._scores[counselor4] - self._scores[boss] > 10:
-                emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
-                decider = counselor4
-            else:
-                if self._moves[boss] is not None and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss Decide")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor4] == self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor4] == self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor4] == self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor] != self._moves[boss]:
-                    emit_and_log("info string listening to counselor2: Counselor Agree")
-                    decider = counselor2
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: Boss & Counselor Agree")
-                    decider = boss
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: Counselor Agree")
-                    decider = counselor
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: Counselor Agree")
-                    decider = counselor2
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] == self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: Counselor Agree")
-                    decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    diff = self._scores[boss] - self._scores[counselor2]
-                    self._printResult(boss, counselor2, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C & C2 C3 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor2: B C & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
-                        decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor3]:
-                    diff = self._scores[boss] - self._scores[counselor2]
-                    self._printResult(boss, counselor2, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C & C2 C4 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor2: B C & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
-                        decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor2]:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
                     diff = self._scores[boss] - self._scores[counselor3]
                     self._printResult(boss, counselor3, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C & C3 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor3: B C & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
                         decider = counselor3
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C2 & C C3 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor: B C2 & C C3 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor3]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C2 & C C4 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor: B C2 & C C4 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor]:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
                     diff = self._scores[boss] - self._scores[counselor3]
                     self._printResult(boss, counselor3, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C2 & C3 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor3: B C2 & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
                         decider = counselor3
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor4]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C3 & C C2 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor: B C3 & C C2 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor2]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C3 & C C4 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor: B C3 & C C4 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor]:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
                     diff = self._scores[boss] - self._scores[counselor2]
                     self._printResult(boss, counselor2, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C3 & C2 C4 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor2: B C3 & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
                         decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor3]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C4 & C C2 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor: B C4 & C C2 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor2]:
-                    diff = self._scores[boss] - self._scores[counselor]
-                    self._printResult(boss, counselor, diff)
-                    if diff >= 0:
-                        emit_and_log("info string listening to boss: B C4 & C C3 Pair - Decide B by {:2.2f}".format(diff))
-                        decider = boss
-                    if diff < 0:
-                        emit_and_log("info string listening to counselor: B C4 & C C3 Pair - Decide C by {:2.2f}".format(diff))
-                        decider = counselor
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor]:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
                     diff = self._scores[boss] - self._scores[counselor2]
                     self._printResult(boss, counselor2, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to boss: B C4 & C2 C3 Pair - Decide B by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
                         decider = boss
                     if diff < 0:
-                        emit_and_log("info string listening to counselor2: B C4 & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
                         decider = counselor2
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor4] != self._moves[boss]:
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
                     diff = self._scores[counselor] - self._scores[counselor3]
                     self._printResult(counselor, counselor3, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to counselor: C C2 & C3 C4 Pair - Decide C by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
                         decider = counselor
                     if diff < 0:
-                        emit_and_log("info string listening to counselor3: C C2 & C3 C4 Pair - Decide C3 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
                         decider = counselor3
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor4] != self._moves[boss]:
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
                     diff = self._scores[counselor] - self._scores[counselor2]
                     self._printResult(counselor, counselor2, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to counselor: C C3 & C2 C4 Pair - Decide C by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
                         decider = counselor
                     if diff < 0:
-                        emit_and_log("info string listening to counselor2: C C3 & C2 C4 Pair - Decide C2 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
                         decider = counselor2
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor3] != self._moves[boss]:
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
                     diff = self._scores[counselor] - self._scores[counselor2]
                     self._printResult(counselor, counselor2, diff)
                     if diff >= 0:
-                        emit_and_log("info string listening to counselor: C C4 & C2 C3 Pair - Decide C by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
                         decider = counselor
                     if diff < 0:
-                        emit_and_log("info string listening to counselor2: C C4 & C2 C3 Pair - Decide C2 by {:2.2f}".format(diff))
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
                         decider = counselor2
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor]:
-                    emit_and_log("info string listening to boss: B & C agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor2] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2]:
-                    emit_and_log("info string listening to boss: B & C2 agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor3]:
-                    emit_and_log("info string listening to boss: B & C3 agree")
-                    decider = boss
-                if self._moves[boss] is not None and self._moves[boss] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to boss: B & C4 agree")
-                    decider = boss
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor3] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: C & C2 agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor3] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor2] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor: C & C3 agree")
-                    decider = counselor
-                if self._moves[counselor] is not None and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor] != self._moves[boss] and self._moves[counselor] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor2] and self._moves[counselor4] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor2] != self._moves[counselor3]:
-                    emit_and_log("info string listening to counselor: C & C4 agree")
-                    decider = counselor
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor4] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor4] and self._moves[counselor] != self._moves[counselor4]:
-                    emit_and_log("info string listening to counselor2: C2 & C3 agree")
-                    decider = counselor2
-                if self._moves[counselor2] is not None and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor2] != self._moves[boss] and self._moves[counselor2] != self._moves[counselor] and self._moves[counselor2] != self._moves[counselor3] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor3] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor3] and self._moves[counselor] != self._moves[counselor3]:
-                    emit_and_log("info string listening to counselor2: C2 & C4 agree")
-                    decider = counselor2
-                if self._moves[counselor3] is not None and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor3] != self._moves[boss] and self._moves[counselor3] != self._moves[counselor] and self._moves[counselor3] != self._moves[counselor2] and self._moves[counselor4] != self._moves[boss] and self._moves[counselor4] != self._moves[counselor] and self._moves[counselor4] != self._moves[counselor2] and self._moves[boss] != self._moves[counselor] and self._moves[boss] != self._moves[counselor2] and self._moves[counselor] != self._moves[counselor2]:
-                    emit_and_log("info string listening to counselor3: C3 & C4 agree")
-                    decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor]
+                    self._printResult(counselor2, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor]
+                    self._printResult(counselor2, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor2] - self._scores[counselor]
+                    self._printResult(counselor2, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor2]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor3]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor3]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor3]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor2] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor3] == self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor3] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor4] == self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor5]
+                    self._printResult(counselor3, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor5]
+                    self._printResult(counselor3, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor4]
+                    self._printResult(counselor3, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor5]
+                    self._printResult(counselor3, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor3] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor4]
+                    self._printResult(counselor3, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor4]
+                    self._printResult(counselor3, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor3] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor2] < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if self._scores[boss] - self._scores[counselor2] >= 0 and self._scores[boss] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[boss] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[boss] - self._scores[counselor] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor5]
+                    self._printResult(counselor3, counselor5, diff)
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor4]
+                    self._printResult(counselor3, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor3] - self._scores[counselor4]
+                    self._printResult(counselor3, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor3] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor3] < 0 and self._scores[counselor3] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor5] < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor4] < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if self._scores[counselor] - self._scores[counselor2] >= 0 and self._scores[counselor] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if self._scores[counselor] - self._scores[counselor2] < 0 and self._scores[counselor2] - self._scores[counselor3] < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor2] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor2]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor2]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor5]
+                    self._printResult(boss, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor2]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor2]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor]
+                    self._printResult(boss, counselor, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor2]
+                    self._printResult(boss, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor3]
+                    self._printResult(boss, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[boss] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[boss] - self._scores[counselor4]
+                    self._printResult(boss, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                        decider = boss
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor2] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor5]
+                    self._printResult(counselor, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor2] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor3]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor2] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor2]
+                    self._printResult(counselor, counselor2, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor3]
+                    self._printResult(counselor, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor] - self._scores[counselor4]
+                    self._printResult(counselor, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                        decider = counselor
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor2] == self._moves[counselor3] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor5]
+                    self._printResult(counselor2, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor3] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor5] and self._moves[counselor4] == self._moves[counselor6]:
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor4]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor3] == self._moves[counselor5]:
+                    diff = self._scores[counselor2] - self._scores[counselor3]
+                    self._printResult(counselor2, counselor3, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+            elif self._moves[counselor2] == self._moves[counselor6] and self._moves[counselor4] == self._moves[counselor5]:
+                    diff = self._scores[counselor2] - self._scores[counselor4]
+                    self._printResult(counselor2, counselor4, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                        decider = counselor2
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                        decider = counselor4
+            elif self._moves[counselor3] == self._moves[counselor4] and self._moves[counselor5] == self._moves[counselor6]:
+                    diff = self._scores[counselor3] - self._scores[counselor5]
+                    self._printResult(counselor3, counselor5, diff)
+                    if diff >= 0:
+                        emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                        decider = counselor3
+                    if diff < 0:
+                        emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                        decider = counselor5
+            elif self._moves[boss] == self._moves[counselor]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor2]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor3]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor4]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor5]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[boss] == self._moves[counselor6]:
+                emit_and_log("info string listening to boss: B OK by {:2.2f}".format(diff))
+                decider = boss
+            elif self._moves[counselor] == self._moves[counselor2]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor3]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor: C OK by {:2.2f}".format(diff))
+                decider = counselor
+            elif self._moves[counselor2] == self._moves[counselor3]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor2] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor2: C2 OK by {:2.2f}".format(diff))
+                decider = counselor2
+            elif self._moves[counselor3] == self._moves[counselor4]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor3] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor3] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor3: C3 OK by {:2.2f}".format(diff))
+                decider = counselor3
+            elif self._moves[counselor4] == self._moves[counselor5]:
+                emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                decider = counselor4
+            elif self._moves[counselor4] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor4: C4 OK by {:2.2f}".format(diff))
+                decider = counselor4
+            elif self._moves[counselor5] == self._moves[counselor6]:
+                emit_and_log("info string listening to counselor5: C5 OK by {:2.2f}".format(diff))
+                decider = counselor5
+            else:
+                emit_and_log("info string listening to boss: counselor is not stronger")
+                decider = boss
                            
             self.listenedTo[decider] += 1
             bestMove = self._moves[decider]
@@ -642,7 +4333,7 @@ class GoratschinChess:
 
     # initialize infos
     def init_infos(self):
-        self.listenedTo = [0, 0, 0, 0, 0]
+        self.listenedTo = [0, 0, 0, 0, 0, 0, 0]
         self.agreed = 0
 
 
@@ -705,7 +4396,6 @@ class GoratschinChess:
         # show the board
         # emit(self.board)
 
-
     # prints results of both engines
     def _printResult(self, boss, counselor, diff):
           emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
@@ -727,6 +4417,16 @@ class GoratschinChess:
                 + " - counselor4: bm " + str(self._moves[counselor4]) + " sc " + str(self._scores[counselor4])
                 + " diff: {:2.2f}".format(diff))
 
+    def _printResult(self, boss, counselor5, diff):
+          emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
+                + " - counselor5: bm " + str(self._moves[counselor5]) + " sc " + str(self._scores[counselor5])
+                + " diff: {:2.2f}".format(diff))
+
+    def _printResult(self, boss, counselor6, diff):
+          emit_and_log("info string final results - boss: bm " +  str(self._moves[boss]) + " sc " + str(self._scores[boss])
+                + " - counselor6: bm " + str(self._moves[counselor6]) + " sc " + str(self._scores[counselor6])
+                + " diff: {:2.2f}".format(diff))
+
     # prints stats on how often was listened to boss and how often to counselor
     def _printStats(self):
         winBoss, drawBoss, lossBoss = get_win_draw_loss_percentages(self._scores_white[0])
@@ -744,7 +4444,15 @@ class GoratschinChess:
         winCounselor4, drawCounselor4, lossCounselor4 = get_win_draw_loss_percentages(self._scores_white[4])
         emit_and_log("info string Counselor4 best move: " + str(self._moves[4]) + " score: " + str(self._scores[4])
                       + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor4, drawCounselor4, lossCounselor4))
-        emit_and_log("info string listen stats [Boss, Counselor, Counselor2, Counselor3, Counselor4] " + str(self.listenedTo))
+        winCounselor5, drawCounselor5, lossCounselor5 = get_win_draw_loss_percentages(self._scores_white[5])
+        emit_and_log("info string Counselor5 best move: " + str(self._moves[5]) + " score: " + str(self._scores[5])
+                      + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor5, drawCounselor5, lossCounselor5))
+        winCounselor6, drawCounselor6, lossCounselor6 = get_win_draw_loss_percentages(self._scores_white[6])
+        emit_and_log("info string Counselor6 best move: " + str(self._moves[6]) + " score: " + str(self._scores[6])
+                      + " white {:2.1f}% win, {:2.1f}% draw, {:2.1f}% loss".format(winCounselor6, drawCounselor6, lossCounselor6))
+
+
+        emit_and_log("info string listen stats [Boss, Counselor, Counselor2, Counselor3, Counselor4, Counselor5, Counselor6] " + str(self.listenedTo))
         totalSum = self.listenedTo[0] + self.listenedTo[1] 
         bossSum = self.listenedTo[0] 
         bossPercent = (float(bossSum) / float(totalSum)) * 100.0
