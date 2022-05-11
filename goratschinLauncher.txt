@@ -1,0 +1,2 @@
+"C:/xxxxxxxxxxxxx/Python.exe" "C:/xxxxxxxxxxxxxxxxxxxx/goratschinLauncher.py"
+pause
