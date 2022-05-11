@@ -14,8 +14,9 @@ from goratschinChess import GoratschinChess
 
 
 # folder and file names for the engines.
-engineFolderDefault = "path of the 5 files.exe related to the chess engines you have chosen"
-engineFileNames = ["file name chess engine1 without the .exe extension", "file name chess engine2 without the .exe extension", "file name chess engine3 without the .exe extension", "file name chess engine4 without the .exe extension", "file name chess engine5 without the .exe extension"]
+#in "engineFolderDefault" write the path of your PC where there is the directory with all the necessary files#
+engineFolderDefault = "C:/xxxxxxxxxxxxx/"
+engineFileNames = ["Combi01", "Combi02", "Combi03", "Combi04", "Combi05", "Combi06", "Combi07"]
 
 
 if __name__ == "__main__":
