@@ -2,11 +2,11 @@
 
 Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 7 chess engines to run at the same time, instead of 2.
 
-Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 7 chess engines into one. In the goratschinChess.py file, the names of the 7 chess engines are: chief, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6
+Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are: chief, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
 
-Synergy-Chess includes 7 clones of the same CE each with a different NNUE network; the rest of the configuration is the same for all clones, including the opening book, the table of endings and the hash memory (to perform a test we recommend the use of 7 clones of Stockfish 15)
+Synergy-Chess includes 8 clones of the same CE each with a different NNUE network; the rest of the configuration is the same for all clones, including the opening book, the ending table and the hash memory (to perform a test we recommend using 8 clones of Stockfish 15)
 
-Synergy-Chess selects the "best move" to send to the GUI with the majority system, instead when 2 or 3 groups of chess engines agree but with different moves between each group, in this case Synergy-Chess chooses the best move of the group with the highest positional score, finally, if all the engines express a different opinion, in this case the Boss chess engine move is chosen.
+Synergy-Chess selects the "best move" to send to the GUI with the majority system of 7 chess engines. In case of a tie if a group of CE has the same move as the chess engine number 8, Synergy-Chess chooses that move, but if not, the system rewards the group with the highest positional score, finally, if all the engines express a different opinion, in this case we choose the move of the chess engine number 8.
 
 
 # Decision-making system by majority and score #
@@ -18,7 +18,12 @@ Synegy-Chess chooses the Best Move to be sent to the GUI with 5 different criter
 cr1) - absolute majority of equal moves = Best Move (priority criterion)
 
 
-cr2) - 3 CE agree and 3 CE agree but with a different move from first group. in this case the the Best Move is :
+cr2) - 3 CE agree and 3 CE agree but with a different move from first group, in this case comparison with CE verdict n ° 8 ;
+
+if a group of CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr3)
+
+
+cr3) - 3 CE agree and 3 CE agree but with a different move from first group. in this case the the Best Move is :
 
 score move CE / 1 - score move CE / 2 
 
@@ -26,7 +31,13 @@ if diff > = 0 : best move = move CE / 1
 
 if diff < 0 : best move = move CE / 2
 
-cr3) -  3 groups of 2 CE agree but each group has a different move, the Best Move is :
+
+cr4) - if 1 or 2 or 3 group of 2 CE agree but with a different move, in this case comparison with CE verdict n ° 8 ;
+
+if a group of CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr5)
+
+
+cr5) -  3 groups of 2 CE agree but each group has a different move, the Best Move is :
 
 score move CE / 1 - score move CE / 2
 
@@ -43,7 +54,8 @@ if score move CE / 1 - score move CE / 2 < 0 and score move CE / 2 - score move 
 if score move CE / 1 - score move CE / 2 < 0 and score move CE / 2 - score move CE / 3 < 0 : best move = move CE / 3
 
 
-cr4) -  2 CE agree and 2 CE agree but with a different move :
+
+cr6) -  2 CE agree and 2 CE agree but with a different move :
 
 score move CE / 1 - score move CE / 2
 
@@ -52,38 +64,43 @@ if diff >= 0 : best move = move CE / 1
 if diff < 0 : best move = move CE / 2
 
 
-cr5) -  the CE all give different moves : best move = move of BOSS chess engine
+cr7) -  the CE all give different moves : best move = move of chess engine number 8
 
 
 # Note :
 the system performs the best move based on the first TRUE condition it encounters and explores the conditions in the following chronological order :
 
-01 - verification of an absolute majority of 7 equal moves
+01 - verification of an absolute majority of 7 equal moves between 7 chess engines
 
-02 - verification of an absolute majority of 6 equal moves
+02 - verification of an absolute majority of 6 equal moves moves between 7 chess engines
 
-03 - verification of absolute majority of 5 equal moves
+03 - verification of absolute majority of 5 equal moves moves between 7 chess engines
 
-04 - verification of an absolute majority of 4 equal moves
+04 - verification of an absolute majority of 4 equal moves moves between 7 chess engines
 
-05 - check if there is 1 group of CE with 3 identical moves and another
-group of CE with 3 identical moves but different from the first group
+05 - check if there is 1 group of 3 CE with the same moves and another group of 3 CE with the same moves but different from the first group and comparison with the sentence of CE n ° 8
 
-06 - absolute majority verification of 3 equal moves
+06 - check if there is 1 group of 3 CE with the same moves and another group of 3 CE with the same moves but different from the first group
 
-07 - check if there are 3 groups of CE with 2 equal but different moves for each group
+07 - absolute majority verification of 3 equal moves
 
-08 - check if there are 2 groups of CE with 2 identical but different moves for each group
+08 - check if there is 1 or 2 or 3 groups of 2 CE with the same moves but different for each group and comparison with the sentence of CE n ° 8
 
-09 - absolute majority verification of 2 equal moves
+09 - check if there are 3 groups of 2 CE with the same moves but different for each group
 
-10 - if all the previous conditions are FALSE, and therefore there are 7 different moves, the system executes ELSE, ie the move of the CE Boss.
+10 - check if there are 2 groups of 2 CE with the same moves but different for each group
+
+11 - absolute majority verification of 2 equal moves
+
+12 - if all the previous conditions are FALSE, and therefore there are 7 different moves, the system executes ELSE, ie the move of the CE n° 8.
 
 
 # CONSIDERATIONS - 
 Synergy-Chess is suitable for games ranging from 40 minutes upwards and the system should bring a slight increase in the ELO score of the chosen chess engine, in short, the inspiration and variety of analysis induced by the 7 different NNUE networks should prevail, and if you have a latest generation CPU, the advantages of the system also increase.
 
 It is true that the single opponent chess engine analyzes more in depth because the multiple chess engine is obliged to divide the processing power of the CPU among the 7 chess engines, however it seems that such depth of analysis is sufficiently qualitative and reliable because the choice of Best Move derives from the comparison of a considerable number of chess engines, moreover the depth of analysis is not always essential.
+
+At the moment there is no chess GUI that allows you to create and configure a group of chess engines that work in synergy like Synergy-Chess, so it would be interesting if some chess GUI implemented such a system to simplify its use and make it accessible even to who do not has familiar with Python
 
 
 # System Requirements
