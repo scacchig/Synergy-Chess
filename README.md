@@ -13,7 +13,7 @@ Synergy-Chess selects the "best move" to send to the GUI with the majority syste
 
 # Note: chess engine = CE
 
-Synegy-Chess chooses the Best Move to be sent to the GUI with 5 different criteria :
+Synegy-Chess chooses the Best Move to be sent to the GUI with 9 different criteria :
 
 cr1) - Check absolute majority between 7 chess engines in the following chronological order ; 
 
@@ -78,33 +78,6 @@ cr8)  if between 7 CE there is an absolute majority of 2 CE with equal moves and
 
 cr9) -  the CE all give different moves : best move = move of chess engine number 8
 
-
-# Note :
-the system performs the best move based on the first TRUE condition it encounters and explores the conditions in the following chronological order :
-
-01 - verification of an absolute majority of 7 equal moves between 7 chess engines
-
-02 - verification of an absolute majority of 6 equal moves moves between 7 chess engines
-
-03 - verification of absolute majority of 5 equal moves moves between 7 chess engines
-
-04 - verification of an absolute majority of 4 equal moves moves between 7 chess engines
-
-05 - check if there is 1 group of 3 CE with the same moves and another group of 3 CE with the same moves but different from the first group and comparison with the sentence of CE n ° 8
-
-06 - check if there is 1 group of 3 CE with the same moves and another group of 3 CE with the same moves but different from the first group
-
-07 - absolute majority verification of 3 equal moves
-
-08 - check if there is 1 or 2 or 3 groups of 2 CE with the same moves but different for each group and comparison with the sentence of CE n ° 8
-
-09 - check if there are 3 groups of 2 CE with the same moves but different for each group
-
-10 - check if there are 2 groups of 2 CE with the same moves but different for each group
-
-11 - absolute majority verification of 2 equal moves
-
-12 - if all the previous conditions are FALSE, and therefore there are 7 different moves, the system executes ELSE, ie the move of the CE n° 8.
 
 
 # CONSIDERATIONS - 
