@@ -1,6 +1,6 @@
 # Synergy-Chess
 
-Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 7 chess engines to run at the same time, instead of 2.
+Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 8 chess engines to run at the same time, instead of 2.
 
 Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are: chief, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
 
