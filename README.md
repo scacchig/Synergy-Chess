@@ -82,7 +82,7 @@ cr9) -  the CE all give different moves : best move = move of chess engine numbe
 
 
 
-# CONSIDERATIONS - 
+# CONSIDERATIONS 
 Synergy-Chess is suitable for games ranging from 40 minutes upwards and the system should bring a slight increase in the ELO score of the chosen chess engine, in short, the inspiration and variety of analysis induced by the 7 different NNUE networks should prevail, and if you have a latest generation CPU, the advantages of the system also increase.
 
 It is true that the single opponent chess engine analyzes more in depth because the multiple chess engine is obliged to divide the processing power of the CPU among the 7 chess engines, however it seems that such depth of analysis is sufficiently qualitative and reliable because the choice of Best Move derives from the comparison of a considerable number of chess engines, moreover the depth of analysis is not always essential.
