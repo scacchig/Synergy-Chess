@@ -2,7 +2,7 @@
 
 Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 8 chess engines to run at the same time, instead of 2.
 
-Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are: chief, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
+Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are : boss, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
 
 Synergy-Chess includes 8 clones of the same CE each with a different NNUE network; the rest of the configuration is the same for all clones, including the opening book, the ending table and the hash memory (to perform a test we recommend using 8 clones of Stockfish 15)
 
