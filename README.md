@@ -94,7 +94,7 @@ At the moment there is no chess GUI that allows you to create and configure a gr
 
 1 - Python 3 or later installed on your PC (https://www.python.org/downloads)
 
-2 - approximately - two GB of hard disk space
+2 - approximately - 1,4 GB of hard disk space
 
 3 - the Eman Chimera program to configure the .exe clones of the 7 chess engines
 
