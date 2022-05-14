@@ -15,15 +15,21 @@ Synergy-Chess selects the "best move" to send to the GUI with the majority syste
 
 Synegy-Chess chooses the Best Move to be sent to the GUI with 5 different criteria :
 
-cr1) - absolute majority of equal moves = Best Move (priority criterion)
+cr1) - Check absolute majority between 7 chess engines in the following chronological order ; 
+
+majority 7 equal moves, 6 equal moves, 5 equal moves, 4 equal moves, and the first that is True is the Best Move
+
+Absolute Majority between 7 chess engines is always the priority criterion ;
+
+if between 7 CE there is no absolute majority of 7, 6, 5 or 4 equal moves, we move on to the next verification - cr 2)
 
 
-cr2) - 3 CE agree and 3 CE agree but with a different move from first group, in this case comparison with CE verdict n ° 8 ;
+cr2) - Check if between 7 CE there is a group of 3 CE with equal moves and compare with the verdict of the CE n ° 8 ;
 
-if a group of CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr3)
+if a group of 3 CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr3)
 
 
-cr3) - 3 CE agree and 3 CE agree but with a different move from first group. in this case the the Best Move is :
+cr3) - if between 7 CE 3 CE agree and 3 CE agree but with a different move from first group. in this case the Best Move is :
 
 score move CE / 1 - score move CE / 2 
 
@@ -32,12 +38,15 @@ if diff > = 0 : best move = move CE / 1
 if diff < 0 : best move = move CE / 2
 
 
-cr4) - if 1 or 2 or 3 group of 2 CE agree but with a different move, in this case comparison with CE verdict n ° 8 ;
-
-if a group of CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr5)
+cr4) if between 7 CE there is an absolute majority of 3 CE with equal moves and if is True this is Bst Move, but if not, proceed to the next check - cr5)
 
 
-cr5) -  3 groups of 2 CE agree but each group has a different move, the Best Move is :
+cr5) - Check if between 7 CE there is a group of 2 CE with equal moves and compare with the verdict of the CE n ° 8 ;
+
+if a group of 2 CE has the same move as CE n ° 8, this is the Best Move, but if not, proceed to the next check - cr6)
+
+
+cr6) - if between 7 CE 3 groups of 2 CE agree but each group has a different move, the Best Move is :
 
 score move CE / 1 - score move CE / 2
 
@@ -55,7 +64,7 @@ if score move CE / 1 - score move CE / 2 < 0 and score move CE / 2 - score move 
 
 
 
-cr6) -  2 CE agree and 2 CE agree but with a different move :
+cr7) -  if between 7 CE 2 CE agree and 2 CE agree but with a different move :
 
 score move CE / 1 - score move CE / 2
 
@@ -64,7 +73,10 @@ if diff >= 0 : best move = move CE / 1
 if diff < 0 : best move = move CE / 2
 
 
-cr7) -  the CE all give different moves : best move = move of chess engine number 8
+cr8)  if between 7 CE there is an absolute majority of 2 CE with equal moves and if is True this is Bst Move, but if not, proceed to the next check - cr9)
+
+
+cr9) -  the CE all give different moves : best move = move of chess engine number 8
 
 
 # Note :
