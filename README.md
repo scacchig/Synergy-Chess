@@ -94,15 +94,13 @@ At the moment there is no chess GUI that allows you to create and configure a gr
 
 1 - Python 3 or later installed on your PC (https://www.python.org/downloads)
 
-2 - approximately - 1,4 GB of hard disk space
+2 - approximately - 850/900 MB of hard disk space
 
-3 - the Eman Chimera program to configure the .exe clones of the 7 chess engines
+3 - GUI Arena 3.5.1 (http://www.playwitharena.de) or Cute Chess (https://github.com/cutechess/cutechess/releases/tag/1.2.0)
 
-4 - GUI Arena 3.5.1 or Cute Chess
+4 - Windows 10 operating system
 
-5 - Windows 10 operating system
-
-6 - a little patience to fix everything .....
+5 - a little patience to fix everything.....
 
 
 # Synergy-Chess installation instructions
@@ -113,38 +111,14 @@ http://www.playwitharena.de
 .2 - Install Python 3.9 or 3.10 on your PC
 https://www.python.org/downloads
 
-.3 - create a single directory where all necessary files will be placed
+.3 - create a single directory where all necessary files will be placed.
 
-.4 - in the created directory enter:
+.4 - in the created directory insert all the files necessary for the correct functioning of Synergy-Chess; the files are available on Google Drive at this address - https://drive.google.com/file/d/1A5Mrn6CqueTQnUElgdrXBzpMw1jYl0c8/view?usp=sharing
 
-a) the .exe file of the desired chess engine from which you will then get the seven .exe clones with the correct configuration
+.5 - open the goratschinLuncher.txt file and replace the first path with the path where the Python.exe file is located on your PC, then replace the second path with the path of the single directory you created on your PC; now, save the file in the directory you created by typing gotatschinLauncher.bat in the File Name field; this .bat file will be installed as a chess engine in the GUI of Arena 3.5.1 or Cute Chess.
 
-b) the .bin file of the opening book
+.6 - open the goratschinLuncher.py file and in engineFolderDefault replace the existing path with the path where the single directory you created is located; the names in engineFileNames must be left unchanged; then further down, still in the same file, go to the options line and change the 8 identical paths of SyzygyPath (tablesas) with the path where the  tablesas is located on your PC; possibly you can download the Syzygy endings table here - https://chess.massimilianogoi.com/download/tablebases - we recommend the download of Syzygy table bases 3-4-5 pieces that take up only 1 GB of hard disk space; the other values should not be changed, unless you know what you are doing ...; finally, now you can save the file with the same name and extension .py always in the directory you created.
 
-c) seven different NNUE networks that you can download from the site: https://tests.stockfishchess.org/nns
-
-d) the .exe file of the Eman Chimera program which is used to configure the seven clones of the chess engine and create seven .exe files with the correct configuration
-
-e) the goratschinLuncher.txt file, the goratschinLuncher.py file and the goratschinChess.py file
-
-.5 - open the goratschinLuncher.txt file and replace the Xs with the path where the Python.exe file is located on your PC, then replace the other Xs with the path of the single directory created in which you have inserted the goratschinLuncher.py file : now, save the file with the same name but adding .bat at the end of the name, always in the same directory.
-
-.6 - open the goratschinLuncher.py file and in engineFolderDefault replace the Xs with the path where the single directory you have created is located; the names in engineFileNames can be left unchanged but in the next point they will be mentioned with the same name. Now always save the file in the same directory and the same .py extension
-
-
-.7 - Open the Eman Chimera program and in "Engine Name" write Combi01, 
-
-then enable the 2 white squares, then click on ADD Uci Engine and in the new window click on Engine Path and in the new window enter the path of the single directory created in where you find the .exe file of the previously inserted chess engine and then select it, 
-
-then click on configure and magically the window will appear in which you can configure the first clone of the chess engine; enter one of the seven NNUE networks that you have downloaded, you just need to type the complete name of extension .nnue, then choose from the various options available, Thread, Hash ... 
-
-for the table of endings, SyzgyPath, you need to enter the path where the relative directory is located, if necessary you can download the 3-4-5 pieces version from this site: https://chess.massimilianogoi.com/download/tablebases/ ---- 
-
-now click on Save and then again on Save, then click on add UCI Engine and in the new window click on Engine Path and in the new window enter the path of the single directory created in which the .exe file of the previously inserted chess engine is located and always select the same .exe file of the chess engine and repeat the configuration by entering identical parameters, including the first NNUE network that you have already entered in the previous step, then Save, now click Create Eman Chimera Engine and in the new window enter the path of the s created single directory in which Eman Chimera will insert the correctly configured Combi01.exe file and a Combi01.xml file
-
-REPEAT the whole procedure for another 6 times, remembering however that in step 2 in Engine Name you will write Combi02 and in the double configuration of the chess engine you will insert a different NNUE network and so on up to step seven, Combi07
-
-
-.8 - last step: open the GUI Arena and install the goratschinLauncher.bat file as a new chess engine and then on the Engine menu, Manage enable the UCI function and not Autodetecd. If you don't see the .bat file, just enable viewing of all files.
+.7 - last step: open the GUI Arena 3.5.1 and install the goratschinLauncher.bat file as a new chess engine and then on the Engine menu, Manage enable the UCI function and not Autodetecd. If you don't see the .bat file, just enable viewing of all files.
 
 .9 - Have fun con Synergy-Chess
