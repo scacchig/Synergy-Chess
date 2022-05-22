@@ -121,4 +121,4 @@ https://www.python.org/downloads
 
 .7 - last step: open the GUI Arena 3.5.1 and install the goratschinLauncher.bat file as a new chess engine and then on the Engine menu, Manage enable the UCI function and not Autodetecd. If you don't see the .bat file, just enable viewing of all files.
 
-.8 - Have fun con Synergy-Chess
+.8 - Have fun with Synergy-Chess
