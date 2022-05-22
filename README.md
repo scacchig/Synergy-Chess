@@ -4,9 +4,9 @@ Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi
 
 Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are : boss, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
 
-Synergy-Chess includes 8 clones of the same CE each with a different NNUE network; the rest of the configuration is the same for all clones, including the opening book, the ending table and the hash memory (to perform a test we recommend using 8 clones of Stockfish 15)
+Synergy-Chess includes 8 .exe files which correspond to 8 different versions of Stockfish 15 Development (https://abrok.eu/stockfish); in Synergy-Chess each Stockfish 15 file is connected with a different NNUE network which passed the fishtest tests and reached the default network status during Stockfish development (https://tests.stockfishchess.org/nns) .; the rest of the configuration relating to the 8 Stockfih 15 files is the same for all, but it is also possible to customize them.
 
-Synergy-Chess selects the "best move" to send to the GUI with the majority system of 7 chess engines. In case of a tie if a group of CE has the same move as the chess engine number 8, Synergy-Chess chooses that move, but if not, the system rewards the group with the highest positional score, finally, if all the engines express a different opinion, in this case we choose the move of the chess engine number 8.
+Synergy-Chess selects the "best move" to send to the GUI with the majority system of 7 chess engines. In case of a tie if a group of chess engines has the same move as the chess engine number 8 (counselor7), Synergy-Chess chooses that move, but if not, the system rewards the group with the highest positional score, finally, if all chess engines express a different opinion, in this case we choose the move of the chess engine number 8 (counselor7).
 
 
 # Decision-making system by majority and score #
@@ -19,7 +19,7 @@ cr1) - Check absolute majority between 7 chess engines in the following chronolo
 
 majority 7 equal moves, 6 equal moves, 5 equal moves, 4 equal moves, and the first that is True is the Best Move
 
-Absolute Majority between 7 chess engines is always the priority criterion ;
+Absolute Majority between 7 chess engines is always the "Priority Criterion" ;
 
 if between 7 CE there is no absolute majority of 7, 6, 5 or 4 equal moves, we move on to the next verification - cr 2)
 
@@ -38,7 +38,7 @@ if diff > = 0 : best move = move CE / 1
 if diff < 0 : best move = move CE / 2
 
 
-cr4) if between 7 CE there is an absolute majority of 3 CE with equal moves and if is True this is Bst Move, but if not, proceed to the next check - cr5)
+cr4) if between 7 CE there is an absolute majority of 3 CE with equal moves and if is True this is Best Move, but if not, proceed to the next check - cr5)
 
 
 cr5) - Check if between 7 CE there is a group of 2 CE with equal moves and compare with the verdict of the CE n ° 8 ;
