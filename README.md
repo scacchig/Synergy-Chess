@@ -126,6 +126,8 @@ c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschi
 
 d) - for CPUs that support AVX2 download the file SynergyChess_for_CPU_AVX2.rar on Google Drive at this address - https://drive.google.com/file/d/1BDVHx_WoT_EmCYzamqv3htjzpPeIZGCT/view?usp=sharing - from Intel Core i5 CPU onwards
 
+e) - for CPUs that support BMI2 download the necessary files from the link in point d) then delete the 8 AVX2 executable files, then on the official Stockfish website - https://stockfishchess.org/download/windows - download the BMI2 executable file and clone it 8 times by naming the clones as follows: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7 and SFa8 and put them in the general directory you previously created.
+
 
 .5 - open the goratschinLuncher.txt file and replace the first path with the path where the Python.exe file is located on your PC, then replace the second path with the path of the single directory you created on your PC; now, save the file in the directory you created by typing gotatschinLauncher.bat in the File Name field; this .bat file will be installed as a chess engine in the GUI of Arena 3.5.1
 
