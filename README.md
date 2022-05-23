@@ -118,7 +118,7 @@ https://www.python.org/downloads
 
 List of files zipped in RAR file :
 
-a) - 8 different .exe files of the latest development versions of Stockfish 15
+a) - 8 different .exe files of the latest development versions of Stockfish 15 (Windows x64 for modern computers)
 
 b) - 8 different NNUE networks that passed fishtest testing and achieved the status of default net during the development of Stockfish.
 
