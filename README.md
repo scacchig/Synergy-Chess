@@ -117,8 +117,11 @@ https://www.python.org/downloads
 .4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1A5Mrn6CqueTQnUElgdrXBzpMw1jYl0c8/view?usp=sharing -
 
 List of files zipped in RAR file :
+
 a) - 8 different .exe files of the latest development versions of Stockfish 15
+
 b) - 8 different NNUE networks that passed fishtest testing and achieved the status of default net during the development of Stockfish.
+
 c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschinChess.py file
 
 
