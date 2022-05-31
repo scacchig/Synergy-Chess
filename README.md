@@ -2,9 +2,7 @@
 
 Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 8 chess engines to run at the same time, instead of 2.
 
-Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file, the names of the 8 chess engines are : boss, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7
-
-Synergy-Chess includes 8 .exe files which correspond to 8 different versions of Stockfish 15 Development (https://abrok.eu/stockfish); in Synergy-Chess each Stockfish 15 file is connected with a different NNUE network which passed the fishtest tests and reached the default network status during Stockfish development (https://tests.stockfishchess.org/nns) .; the rest of the configuration relating to the 8 Stockfih 15 files is the same for all, but it is also possible to customize them.
+Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file the names of the 8 chess engines are : boss, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7.   Each chess engine is connected to its default NNUE network and has an ELO score above 3400 (March 31, 2022)
 
 Synergy-Chess selects the "best move" to send to the GUI with the majority system of 7 chess engines. In case of a tie if a group of chess engines has the same move as the chess engine number 8 (counselor7), Synergy-Chess chooses that move, but if not, the system rewards the group with the highest positional score, finally, if all chess engines express a different opinion, in this case we choose the move of the chess engine number 8 (counselor7).
 
