@@ -112,13 +112,13 @@ https://www.python.org/downloads
 .3 - create a single directory where all necessary files will be placed.
 
 
-.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1jG02xjdmVt1Kct2-YWm4OqQGm-KAQBfI/view?usp=sharing -
+.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1Dt3SbywIGwqgitaaxW8kg7ezw34XP2t9/view?usp=sharing -
 
 List of files zipped in RAR file SynergyChess.rar (Chess Engines executable files that run on all CPUs) :
 
 a) - 8 .exe files related to the 8 chess engines
 
-b) - 4 files NNUE networks
+b) - 3 files NNUE networks
 
 c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschinChess.py file
 
