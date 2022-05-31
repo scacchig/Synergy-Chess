@@ -112,25 +112,23 @@ https://www.python.org/downloads
 .3 - create a single directory where all necessary files will be placed.
 
 
-.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1A5Mrn6CqueTQnUElgdrXBzpMw1jYl0c8/view?usp=sharing -
+.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1jG02xjdmVt1Kct2-YWm4OqQGm-KAQBfI/view?usp=sharing -
 
 List of files zipped in RAR file SynergyChess.rar (Chess Engines executable files that run on all CPUs) :
 
-a) - 8 different .exe files of the latest development versions of Stockfish 15 (Windows x64 for modern computers)
+a) - 8 .exe files related to the 8 chess engines
 
-b) - 8 different NNUE networks that passed fishtest testing and achieved the status of default net during the development of Stockfish.
+b) - 4 files NNUE networks
 
 c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschinChess.py file
 
-d) - for CPUs that support AVX2 download the file SynergyChess_for_CPU_AVX2.rar on Google Drive at this address - https://drive.google.com/file/d/1BDVHx_WoT_EmCYzamqv3htjzpPeIZGCT/view?usp=sharing - from Intel Core i5 CPU onwards
-
-e) - for CPUs that support BMI2 download the necessary files from the link in point d) then delete the 8 AVX2 executable files, then on the official Stockfish website - https://stockfishchess.org/download/windows - download the BMI2 executable file and clone it 8 times by naming the clones as follows: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7 and SFa8 and put them in the general directory you previously created.
+d) - if you have a CPU that supports BMI2 or AVX2 architecture you can replace the 8 chess engines with BMI2 or AVX2 executables, but you must check the default NNUE network of each chess engine you enter and, if necessary, replace 1 or more NNUE networks that you downloaded from Synergy-Chess, also, you need to rename the executables you add: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7, SFa8.
 
 
 .5 - open the goratschinLuncher.txt file and replace the first path with the path where the Python.exe file is located on your PC, then replace the second path with the path of the single directory you created on your PC; now, save the file in the directory you created by typing gotatschinLauncher.bat in the File Name field; this .bat file will be installed as a chess engine in the GUI of Arena 3.5.1
 
-.6 - open the goratschinLuncher.py file and in engineFolderDefault replace the existing path with the path where the single directory you created is located; the names in engineFileNames must be left unchanged; then further down, still in the same file, go to the options line and change the 8 identical paths of SyzygyPath (tablesas) with the path where the  tablesas is located on your PC; possibly you can download the Syzygy endings table here - https://chess.massimilianogoi.com/download/tablebases - we recommend the download of Syzygy table bases 3-4-5 pieces that take up only 1 GB of hard disk space; the other values should not be changed, unless you know what you are doing ...; finally, now you can save the file with the same name and extension .py always in the directory you created.
+.6 - open the goratschinLauncher.py file and in engineFolderDefault replace the existing path with the path where the single directory you created is located and save file ; the names in engineFileNames must be left unchanged.
 
-.7 - last step: open the GUI Arena 3.5.1 and install the goratschinLauncher.bat file as a new chess engine and then on the Engine menu, Manage enable the UCI function and not Autodetecd. If you don't see the .bat file, just enable viewing of all files.
+.7 - last step: open the GUI Arena 3.5.1 and from the Engine Menu install the goratschinLauncher.bat file as a new chess engine (if you don't see the .bat file, enable the display of all files) and then from the Engine / Manage menu enable the UCI function and not Autodetecd, and we recommend enabling arena books ; finally, from the Engine Engine 1 menu (or right mouse button under the chessboard) click on configure and search "SyzygyPath" and enter the path where the endgames table is located on your PC; possibly you can download the Syzygy endings table here - https://chess.massimilianogoi.com/download/tablebases - we recommend the download of Syzygy 3-4-5 pieces table bases that take up only 1 GB of hard disk space ; the other values should not be changed, unless you know what you are doing...
 
 .8 - Have fun with Synergy-Chess
