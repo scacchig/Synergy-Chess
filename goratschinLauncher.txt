@@ -1,0 +1,2 @@
+"C:/Users/Gianni/AppData/Local/Programs/Python/Python39/Python.exe" "C:/Temp05/ChessCombi2/engines/goratschinLauncher.py"
+pause
