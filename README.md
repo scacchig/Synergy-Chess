@@ -112,9 +112,9 @@ https://www.python.org/downloads
 .3 - create a single directory where all necessary files will be placed.
 
 
-.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address - https://drive.google.com/file/d/1pKH9MByNX8WMHYZ6XHys6CGT6YAL3EoF/view?usp=sharing -
+.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address for standard version --- https://drive.google.com/file/d/1pKH9MByNX8WMHYZ6XHys6CGT6YAL3EoF/view?usp=sharing --- and this address for CPU that support AVX2 system --- https://drive.google.com/file/d/134rhzT2tCbpi3lLxnbq9FYHHRKLRbech/view?usp=sharing
 
-List of files zipped in RAR file SynergyChess.rar (Chess Engines executable files that run on all CPUs) :
+List of files zipped in RAR files :
 
 a) - 8 .exe files related to the 8 chess engines
 
@@ -122,7 +122,7 @@ b) - 3 files NNUE networks
 
 c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschinChess.py file
 
-d) - if you have a CPU that supports BMI2 or AVX2 architecture you can replace the 8 chess engines with BMI2 or AVX2 executables, but you must check the default NNUE network of each chess engine you enter and, if necessary, replace 1 or more NNUE networks that you downloaded from Synergy-Chess, also, you need to rename the executables you add: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7, SFa8.
+d) - if you have a CPU that supports BMI2 architecture you can replace the 8 chess engines with BMI2 executables, but you must check the default NNUE network of each chess engine you enter and, if necessary, replace 1 or more NNUE networks that you downloaded from Synergy-Chess, also, you need to rename the executables you add: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7, SFa8.
 
 
 .5 - open the goratschinLuncher.txt file and replace the first path with the path where the Python.exe file is located on your PC, then replace the second path with the path of the single directory you created on your PC; now, save the file in the directory you created by typing gotatschinLauncher.bat in the File Name field; this .bat file will be installed as a chess engine in the GUI of Arena 3.5.1
