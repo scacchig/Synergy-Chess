@@ -132,3 +132,24 @@ d) - if you have a CPU that supports BMI2 architecture you can replace the 8 che
 .7 - last step: open the GUI Arena 3.5.1 and from the Engine Menu install the goratschinLauncher.bat file as a new chess engine (if you don't see the .bat file, enable the display of all files) and then from the Engine / Manage menu enable the UCI function and not Autodetecd, and we recommend enabling arena books ; finally, from the Engine Engine 1 menu (or right mouse button under the chessboard) click on configure and search "SyzygyPath" and enter the path where the endgames table is located on your PC; possibly you can download the Syzygy endings table here - https://chess.massimilianogoi.com/download/tablebases - we recommend the download of Syzygy 3-4-5 pieces table bases that take up only 1 GB of hard disk space ; the other values should not be changed, unless you know what you are doing...
 
 .8 - Have fun with Synergy-Chess
+
+.
+
+# GUI Arena 3.5.1
+<b>Tournament between Synergy-Chess and other chess engines</b>
+
+a) - click on the "Engines / Tournament" menu, then in the window that appears click on "Settings" 
+
+and set the various options, including "Elo rating" to 2850 or more
+
+.
+
+b) - then, still in the "Engines / Tournament" window, click on "Start / Quit" 
+
+and enable "Restart engines after each game", and on "Additional delay during engine start phase" set "8 or 10 seconds";
+
+.
+
+"Additional delay" is very important because it gives Synergy-Chess the time it takes to restart 
+
+the 8 chess engines at the end of each Round and receive New Game input only when the restart is complete.
