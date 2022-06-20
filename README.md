@@ -122,7 +122,7 @@ b) - 4 files NNUE networks
 
 c) - 1 goratschinLauncher.txt file, 1 goratschinLauncher.py file and 1 goratschinChess.py file
 
-d) - if you have a CPU that supports BMI2 architecture you can replace the 8 chess engines with BMI2 executables, but you must check the default NNUE network of each chess engine you enter and, if necessary, replace 1 or more NNUE networks that you downloaded from Synergy-Chess, also, you need to rename the executables you add: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7, SFa8.
+d) - if you have a CPU that supports the AVX2 or BMI2 architecture you can replace the 8 chess engines and if necessary the NNUE networks, also you have to rename the executables you add: SFa1, SFa2, SFa3, SFa4, SFa5, SFa6, SFa7 and SFa8, finally you have to open the goratschinLauncher.py file and in "options =" ​​you have to correct the options and you can also add other.
 
 
 .5 - open the goratschinLuncher.txt file and replace the first path with the path where the Python.exe file is located on your PC, then replace the second path with the path of the single directory you created on your PC; now, save the file in the directory you created by typing gotatschinLauncher.bat in the File Name field; this .bat file will be installed as a chess engine in the GUI of Arena 3.5.1
