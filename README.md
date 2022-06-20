@@ -142,13 +142,11 @@ a) - click on the "Engines / Tournament" menu, then in the window that appears c
 
 and set the various options, including "Elo rating" to 2850 or more
 
-.
 
 b) - then, still in the "Engines / Tournament" window, click on "Start / Quit" 
 
 and enable "Restart engines after each game", and on "Additional delay during engine start phase" set "8 or 10 seconds";
 
-.
 
 "Additional delay" is very important because it gives Synergy-Chess the time it takes to restart 
 
