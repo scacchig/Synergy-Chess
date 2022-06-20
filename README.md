@@ -1,10 +1,10 @@
 # Synergy-Chess
 
-Synergy-Chess is the public project of "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which I have modified to allow 8 chess engines to run at the same time, instead of 2.
+Synergy-Chess is an extension of the public project "py-goratschin" (https://github.com/feldi/py-goratschin#py-goratschin) which allows the simultaneous management of 8 chess engines, instead of 2.
 
-Synergy-Chess is a "chess engine" that supports the UCI chess protocol and combines 8 chess engines into one. In the goratschinChess.py file the names of the 8 chess engines are : boss, counselor, counselor2, counselor3, counselor4, counselor5 and counselor6, counselor7.   Each chess engine is connected to its default NNUE network and has an ELO score above 3400 (March 31, 2022)
+Synergy-Chess supports the UCI chess protocol and the 8 chess engines are connected to their own default NNUE network and each has an ELO score greater than 3400 (March 31, 2022).
 
-Synergy-Chess selects the "best move" to send to the GUI with the majority system of 7 chess engines. In case of a tie if a group of chess engines has the same move as the chess engine number 8 (counselor7), Synergy-Chess chooses that move, but if not, the system rewards the group with the highest positional score, finally, if all chess engines express a different opinion, in this case we choose the move of the chess engine number 8 (counselor7).
+Synergy-Chess selects the "best move" to send to the GUI giving priority to the absolute majority system among 7 chess engines and in case of a tie if a group of chess engines has the same move as chess engine number 8, Synergy-Chess chooses that move, but in the negative case the system rewards the group with the highest positional score, finally, if all the chess engines express a different opinion, in this case the move of the chess engine number 8 is rewarded.
 
 
 # Decision-making system by majority and score #
