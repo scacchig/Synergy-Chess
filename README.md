@@ -112,7 +112,7 @@ https://www.python.org/downloads
 .3 - create a single directory where all necessary files will be placed.
 
 
-.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address --- https://drive.google.com/file/d/1BNkl72ZsC8p_RhOTrxbhyHVsVZ4gxWe5/view?usp=sharing
+.4 - in the directory created insert all the files necessary for the correct functioning of Synergy-Chess ; for reasons of web space on github I uploaded all the necessary files to Google Drive at this address --- https://drive.google.com/file/d/1jpZFAHuACFgOpAgYnIzuF5Qd3WzKygcL/view?usp=sharing
 
 List of files zipped in RAR files :
 
