@@ -81,7 +81,7 @@ cr9) -  the CE all give different moves : best move = move of chess engine numbe
 
 
 # CONSIDERATIONS 
-With older generation CPUs we recommend a minimum time per game of 30/40 minutes, but with new generation CPUs the minimum optimal time is 10/15 minutes, so we could basically say that the minimum and optimal time for game of Synergy-Chess is directly proportional to the processing speed of the CPU used.
+With older generation CPUs we recommend a minimum time per game of 20/30 minutes, but with new generation CPUs the minimum optimal time is 10/15 minutes, so we could basically say that the minimum and optimal time for game of Synergy-Chess is directly proportional to the processing speed of the CPU used.
 
 It is true that Synergy-Chess is obliged to divide the processing power of the CPU among the 8 chess engines, but if the minimum game time is respected as described above, the Sinergy-Chess analyzes will always be carried out within a "qualitative threshold sufficient ”because depth of analysis is not necessary in all positions ; therefore, by virtue of these hypotheses, the multiple analytical comparison of Synergy-Chess should avoid or at least significantly reduce any errors that may arise from the result of a single analysis.
 
